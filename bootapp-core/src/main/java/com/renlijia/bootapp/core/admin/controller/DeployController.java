@@ -22,17 +22,9 @@ public class DeployController {
     @RequestMapping(value = "deploy")
     public String deploy(@RequestParam("jar") String appJarPath, @RequestParam(value = "dep",required = false) String dependenceJarPath) {
 
-        ServletInfo servletInfo = BootAppLoader.buildServlet(appJarPath, dependenceJarPath);
-        BootAppLoader.getDeploymentInfo().addServlet(servletInfo);
-        Collection<String> strings = defaultContainer().listDeployments();
-        for(String s:strings){
-            defaultContainer().getDeployment(s).deploy();
-            try {
-                defaultContainer().getDeployment(s).start();
-            } catch (ServletException e) {
-                throw new RuntimeException(e);
-            }
-        }
+
+        BootAppLoader.registerServlet(appJarPath,dependenceJarPath);
+
         return "success";
 
     }

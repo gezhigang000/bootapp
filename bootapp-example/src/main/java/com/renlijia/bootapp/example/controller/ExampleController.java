@@ -1,4 +1,4 @@
-package com.renlijia.bootapp.example;
+package com.renlijia.bootapp.example.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,6 +8,6 @@ public class ExampleController {
 
     @RequestMapping("/test")
     public String test(){
-        return "this is exam test";
+        return " this is exam test";
     }
 }

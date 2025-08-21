@@ -22,4 +22,9 @@ public class ExampleAppMetaInfo implements AppMetaInfo {
     public String[] basePackages() {
         return new String[]{"com.renlijia.bootapp.example"};
     }
+
+    @Override
+    public Class appClass() {
+        return AppConfig.class;
+    }
 }

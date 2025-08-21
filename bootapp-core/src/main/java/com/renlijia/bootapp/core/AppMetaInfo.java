@@ -9,4 +9,6 @@ public interface AppMetaInfo {
     String appWebContext() ;
 
     String[] basePackages();
+
+    Class appClass();
 }
