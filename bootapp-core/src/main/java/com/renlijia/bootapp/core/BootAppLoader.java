@@ -95,16 +95,13 @@ public class BootAppLoader {
         }
         AppMetaInfo appMetaInfo = appMetaInfos.get(0);
         WebApplicationContext webApplicationContext = buildApplicationContext(appMetaInfo, bootAppClassloader);
-
         String mapping = "/*";
-        String servletName = "DispatcherServlet";
         if(appMetaInfo.appWebContext() != null){
             mapping = "/" + appMetaInfo.appWebContext() + "/*";
-            servletName = appMetaInfo.appWebContext() + "DispatcherServlet";
         }
         DispatcherServlet  dispatcherServlet = new DispatcherServlet(webApplicationContext);
 
-        JettyServer.registerServlet(mapping, dispatcherServlet);
+        JettyServer.registerServlet(appMetaInfo.appName(),mapping, dispatcherServlet);
 
     }
 }

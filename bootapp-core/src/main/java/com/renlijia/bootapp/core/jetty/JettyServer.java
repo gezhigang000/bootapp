@@ -11,6 +11,7 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.servlet.DispatcherServlet;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class JettyServer {
 
@@ -20,38 +21,40 @@ public class JettyServer {
     private static Server server = new Server(DEFAULT_PORT);
     private static final ServletContextHandler servletContextHandler = new ServletContextHandler();
 
-    private static Map<String,ServletHolder> servletHolderMap = new HashMap<>();
+    private static Map<String, ServletHolder> servletHolderMap = new HashMap<>();
+
     public void start() throws Exception {
         server.setHandler(servletContextHandler(webApplicationContext()));
         server.start();
         server.join();
     }
 
-    public static void registerServlet(String mapping,DispatcherServlet dispatcherServlet){
-        ServletHolder servletHolder = servletHolderMap.get(mapping);
-        if(servletHolder == null){
-            servletHolder = new ServletHolder(dispatcherServlet);
-            servletContextHandler.addServlet(servletHolder, mapping);
-            servletHolderMap.put(mapping,servletHolder);
-        }else {
-            ServletHolder ss = new ServletHolder(dispatcherServlet);
-            try {
-                ss.start();
 
+
+    public static void registerServlet(String appName, String mapping, DispatcherServlet dispatcherServlet) {
+        ServletHolder servletHolder = servletHolderMap.get(mapping);
+        if (servletHolder != null) {
+            try {
+                servletHolder.stop();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-
-            ServletMapping[] servletMappings = ss.getServletHandler().getServletMappings();
-            ServletHolder[] servlets = ss.getServletHandler().getServlets();
-
-            //servletHolder.getServletHandler().addServletWithMapping(ss,mapping);
-            servletHolder.getServletHandler().setServletMappings(servletMappings);
-            servletHolder.getServletHandler().setServlets(servlets);
-
-
+            ServletMapping[] servletMappings = servletContextHandler.getServletHandler().getServletMappings();
+            List<ServletMapping> servletMappingList = Arrays.asList(servletMappings);
+            List<ServletMapping> newServletMapping = servletMappingList.stream().filter(e -> !mapping.equals(e.getPathSpecs()[0])).collect(Collectors.toList());
+            servletContextHandler.getServletHandler().setServletMappings(newServletMapping.toArray(new ServletMapping[0]));
+            ServletHolder[] servlets = servletContextHandler.getServletHandler().getServlets();
+            List<ServletHolder> servletHolderList = Arrays.asList(servlets);
+            List<ServletHolder> newServletHolderList = servletHolderList.stream().filter(e -> !appName.equals(e.getName())).collect(Collectors.toList());
+            servletContextHandler.getServletHandler().setServlets(newServletHolderList.toArray(new ServletHolder[0]));
 
         }
+
+
+
+        servletHolder = new ServletHolder(appName,dispatcherServlet);
+        servletContextHandler.addServlet(servletHolder, mapping);
+        servletHolderMap.put(mapping, servletHolder);
         servletContextHandler.addEventListener(new ContextLoaderListener(dispatcherServlet.getWebApplicationContext()));
     }
 
