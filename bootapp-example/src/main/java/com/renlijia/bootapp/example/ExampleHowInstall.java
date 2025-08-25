@@ -1,21 +1,16 @@
 package com.renlijia.bootapp.example;
 
-import com.renlijia.bootapp.core.AppMetaInfo;
+import com.renlijia.bootapp.core.HowInstall;
 
-public class ExampleAppMetaInfo implements AppMetaInfo {
+public class ExampleHowInstall implements HowInstall {
     @Override
     public String appName() {
         return "exam";
     }
 
     @Override
-    public String appVersion() {
-        return "1";
-    }
-
-    @Override
     public String appWebContext() {
-        return "exam";
+        return null;
     }
 
     @Override

@@ -1,10 +1,8 @@
 package com.renlijia.bootapp.core;
 
-public interface AppMetaInfo {
+public interface HowInstall {
 
     String appName() ;
-
-    String appVersion();
 
     String appWebContext() ;
 

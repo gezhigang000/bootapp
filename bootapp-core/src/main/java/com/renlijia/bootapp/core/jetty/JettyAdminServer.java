@@ -1,5 +1,7 @@
 package com.renlijia.bootapp.core.jetty;
 
+import com.renlijia.bootapp.core.server.AdminServer;
+import com.renlijia.bootapp.core.server.AdminServerConfig;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -9,28 +11,36 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import java.net.InetSocketAddress;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class JettyServer {
+public class JettyAdminServer implements AdminServer {
 
-    private static final int DEFAULT_PORT = 8080;
-    private static final String CONTEXT_PATH = "/";
-    private static final String MAPPING_URL = "/admin/*";
-    private static Server server = new Server(DEFAULT_PORT);
+    private static Server server;
+    private AdminServerConfig adminServerConfig;
+
+    public JettyAdminServer(AdminServerConfig adminServerConfig) {
+        if (adminServerConfig == null) {
+            throw new RuntimeException("AdminServerConfig can not null");
+        }
+        this.adminServerConfig = adminServerConfig;
+    }
+
+
     private static final ServletContextHandler servletContextHandler = new ServletContextHandler();
 
     private static Map<String, ServletHolder> servletHolderMap = new HashMap<>();
 
     public void start() throws Exception {
+        server = new Server(new InetSocketAddress(adminServerConfig.getHost(), adminServerConfig.getPort()));
         server.setHandler(servletContextHandler(webApplicationContext()));
         server.start();
         server.join();
     }
-
 
 
     public static void registerServlet(String appName, String mapping, DispatcherServlet dispatcherServlet) {
@@ -51,10 +61,7 @@ public class JettyServer {
             servletContextHandler.getServletHandler().setServlets(newServletHolderList.toArray(new ServletHolder[0]));
 
         }
-
-
-
-        servletHolder = new ServletHolder(appName,dispatcherServlet);
+        servletHolder = new ServletHolder(appName, dispatcherServlet);
         servletContextHandler.addServlet(servletHolder, mapping);
         servletHolderMap.put(mapping, servletHolder);
         servletContextHandler.addEventListener(new ContextLoaderListener(dispatcherServlet.getWebApplicationContext()));
@@ -62,16 +69,21 @@ public class JettyServer {
 
 
     private ServletContextHandler servletContextHandler(WebApplicationContext context) {
-        servletContextHandler.setContextPath(CONTEXT_PATH);
+        servletContextHandler.setContextPath(adminServerConfig.getContextPath());
         DispatcherServlet dispatcherServlet = new DispatcherServlet(context);
-        servletContextHandler.addServlet(new ServletHolder(dispatcherServlet), MAPPING_URL);
+        servletContextHandler.addServlet(new ServletHolder(dispatcherServlet), adminServerConfig.getAdminMapping());
         servletContextHandler.addEventListener(new ContextLoaderListener(context));
         return servletContextHandler;
     }
 
     private WebApplicationContext webApplicationContext() {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.setConfigLocation("com.renlijia.bootapp.core.admin");
+        if (adminServerConfig.getSpringConfigLocations() != null) {
+            context.setConfigLocations(adminServerConfig.getSpringConfigLocations());
+        }
+        if (adminServerConfig.getSpringRegisterClass() != null) {
+            context.register(adminServerConfig.getSpringRegisterClass());
+        }
         return context;
     }
 }

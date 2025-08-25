@@ -10,4 +10,9 @@ public class ExampleController {
     public String test(){
         return "1122 this is exam test";
     }
+
+    @RequestMapping("/")
+    public String home(){
+        return " this is exam home";
+    }
 }

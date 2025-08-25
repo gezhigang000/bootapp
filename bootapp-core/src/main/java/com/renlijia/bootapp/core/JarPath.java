@@ -3,12 +3,10 @@ package com.renlijia.bootapp.core;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
-public class BootAppConfig {
+public class JarPath {
 
-    public String appName;
 
     public String appJarPath;
 
@@ -18,11 +16,8 @@ public class BootAppConfig {
 
     public List<File> dependenceJarFileList;
 
-    public Set<String> scanPackages;
 
-    public String appWebContext;
-
-    public BootAppConfig(String appJarPath, String dependenceJarPath) {
+    public JarPath(String appJarPath, String dependenceJarPath) {
         this.appJarPath = appJarPath;
         this.dependenceJarPath = dependenceJarPath;
         initJarFile();

@@ -10,9 +10,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class BootAppClassloader  extends URLClassLoader {
+public class AppClassloader extends URLClassLoader {
 
-    private Logger log = LoggerFactory.getLogger(BootAppClassloader.class) ;
+    private Logger log = LoggerFactory.getLogger(AppClassloader.class) ;
 
     public static final String[] DEFAULT_EXCLUDED_PACKAGES = new String[]{"java.", "javax.", "sun.", "oracle."};
 
@@ -20,14 +20,14 @@ public class BootAppClassloader  extends URLClassLoader {
 
     private final Set<String> overridePackages = new HashSet<>();
 
-    public BootAppClassloader(URL[] urls, ClassLoader parent) {
+    public AppClassloader(URL[] urls, ClassLoader parent) {
         super(urls, parent);
     }
 
     @Override
     protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
         Class<?> result = null;
-        synchronized (BootAppClassloader.class) {
+        synchronized (AppClassloader.class) {
             if (isOverriding(name)) {
                 if (log.isInfoEnabled()) {
                     log.info("Load class for overriding: {}", name);
