@@ -22,4 +22,14 @@ public class ExampleHowInstall implements HowInstall {
     public Class appClass() {
         return AppConfig.class;
     }
+
+    @Override
+    public String appJarAbsolutePath() {
+        return "/home/";
+    }
+
+    @Override
+    public String appJarNameRegex() {
+        return ".*example.*";
+    }
 }

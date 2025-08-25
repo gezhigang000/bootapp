@@ -17,8 +17,8 @@ public class AdminServerConfig {
     private int minThreads = 100;
     private int maxThreads = 500;
 
-    private int acceptors = 2;
-    private int selectors = 4;
+    private int acceptors = -1;
+    private int selectors = -1;
 
     private int outputBufferSize =  32 * 1024;;
     private int requestHeaderSize = 8192;

@@ -9,12 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DeployController {
 
-
-
     @RequestMapping(value = "deploy")
     public String deploy(@RequestParam("jar") String appJarPath, @RequestParam(value = "dep",required = false) String dependenceJarPath) {
         AppLoader.registerServlet(appJarPath,dependenceJarPath);
         return "success";
-
     }
 }

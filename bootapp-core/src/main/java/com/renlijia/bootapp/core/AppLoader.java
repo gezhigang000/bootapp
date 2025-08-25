@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 public class AppLoader {
 
+
     private static WebApplicationContext buildApplicationContext(HowInstall howInstall, AppClassloader appClassloader) {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
         context.setClassLoader(appClassloader);

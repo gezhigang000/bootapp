@@ -9,4 +9,8 @@ public interface HowInstall {
     String[] basePackages();
 
     Class appClass();
+
+    String appJarAbsolutePath();
+
+    String appJarNameRegex();
 }
