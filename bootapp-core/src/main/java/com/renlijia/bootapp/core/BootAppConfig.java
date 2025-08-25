@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 public class BootAppConfig {
 
     public String appName;
-    public String appVersion;
 
     public String appJarPath;
 
