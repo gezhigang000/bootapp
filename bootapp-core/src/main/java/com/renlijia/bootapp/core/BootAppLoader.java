@@ -5,8 +5,6 @@ import io.undertow.servlet.api.DeploymentInfo;
 import io.undertow.servlet.api.InstanceFactory;
 import io.undertow.servlet.api.ServletInfo;
 import io.undertow.servlet.util.ImmediateInstanceFactory;
-import jakarta.servlet.ServletException;
-import org.eclipse.jetty.servlet.ServletHolder;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
