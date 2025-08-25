@@ -2,10 +2,14 @@ package com.renlijia.bootapp.core.jetty;
 
 import com.renlijia.bootapp.core.server.AdminServer;
 import com.renlijia.bootapp.core.server.AdminServerConfig;
+import org.eclipse.jetty.server.HttpConfiguration;
+import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.servlet.ServletMapping;
+import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -36,11 +40,31 @@ public class JettyAdminServer implements AdminServer {
     private static Map<String, ServletHolder> servletHolderMap = new HashMap<>();
 
     public void start() throws Exception {
+        QueuedThreadPool queuedThreadPool = new QueuedThreadPool();
+        queuedThreadPool.setMaxThreads(adminServerConfig.getMaxThreads());
+        queuedThreadPool.setMinThreads(adminServerConfig.getMinThreads());
+
+
         server = new Server(new InetSocketAddress(adminServerConfig.getHost(), adminServerConfig.getPort()));
 
+        ServerConnector serverConnector = getServerConnector();
+        serverConnector.setHost(adminServerConfig.getHost());
+        serverConnector.setPort(adminServerConfig.getPort());
         server.setHandler(servletContextHandler(webApplicationContext()));
         server.start();
         server.join();
+    }
+
+    private ServerConnector getServerConnector() {
+        HttpConfiguration httpConfiguration = new HttpConfiguration();
+        httpConfiguration.setOutputBufferSize(adminServerConfig.getOutputBufferSize());
+        httpConfiguration.setRequestHeaderSize(adminServerConfig.getRequestHeaderSize());
+        httpConfiguration.setResponseHeaderSize(adminServerConfig.getResponseHeaderSize());
+        HttpConnectionFactory httpConnectionFactory = new HttpConnectionFactory(httpConfiguration);
+
+        ServerConnector serverConnector = new ServerConnector(server,adminServerConfig.getAcceptors()
+        ,adminServerConfig.getSelectors(),httpConnectionFactory);
+        return serverConnector;
     }
 
 

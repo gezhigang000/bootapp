@@ -14,6 +14,72 @@ public class AdminServerConfig {
     private String[] springConfigLocations;
     private Class springRegisterClass;
 
+    private int minThreads = 100;
+    private int maxThreads = 500;
+
+    private int acceptors = 2;
+    private int selectors = 4;
+
+    private int outputBufferSize =  32 * 1024;;
+    private int requestHeaderSize = 8192;
+    private int responseHeaderSize = 8192;
+
+    public int getMinThreads() {
+        return minThreads;
+    }
+
+    public void setMinThreads(int minThreads) {
+        this.minThreads = minThreads;
+    }
+
+    public int getMaxThreads() {
+        return maxThreads;
+    }
+
+    public void setMaxThreads(int maxThreads) {
+        this.maxThreads = maxThreads;
+    }
+
+    public int getAcceptors() {
+        return acceptors;
+    }
+
+    public void setAcceptors(int acceptors) {
+        this.acceptors = acceptors;
+    }
+
+    public int getSelectors() {
+        return selectors;
+    }
+
+    public void setSelectors(int selectors) {
+        this.selectors = selectors;
+    }
+
+    public int getOutputBufferSize() {
+        return outputBufferSize;
+    }
+
+    public void setOutputBufferSize(int outputBufferSize) {
+        this.outputBufferSize = outputBufferSize;
+    }
+
+    public int getRequestHeaderSize() {
+        return requestHeaderSize;
+    }
+
+    public void setRequestHeaderSize(int requestHeaderSize) {
+        this.requestHeaderSize = requestHeaderSize;
+    }
+
+    public int getResponseHeaderSize() {
+        return responseHeaderSize;
+    }
+
+    public void setResponseHeaderSize(int responseHeaderSize) {
+        this.responseHeaderSize = responseHeaderSize;
+    }
+
     public int getPort() {
         return port;
     }
