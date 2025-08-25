@@ -43,10 +43,7 @@ public class JettyAdminServer implements AdminServer {
         QueuedThreadPool queuedThreadPool = new QueuedThreadPool();
         queuedThreadPool.setMaxThreads(adminServerConfig.getMaxThreads());
         queuedThreadPool.setMinThreads(adminServerConfig.getMinThreads());
-
-
         server = new Server(new InetSocketAddress(adminServerConfig.getHost(), adminServerConfig.getPort()));
-
         ServerConnector serverConnector = getServerConnector();
         serverConnector.setHost(adminServerConfig.getHost());
         serverConnector.setPort(adminServerConfig.getPort());
