@@ -37,6 +37,7 @@ public class JettyAdminServer implements AdminServer {
 
     public void start() throws Exception {
         server = new Server(new InetSocketAddress(adminServerConfig.getHost(), adminServerConfig.getPort()));
+
         server.setHandler(servletContextHandler(webApplicationContext()));
         server.start();
         server.join();
