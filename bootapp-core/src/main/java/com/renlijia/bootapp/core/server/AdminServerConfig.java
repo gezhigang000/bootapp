@@ -1,5 +1,7 @@
 package com.renlijia.bootapp.core.server;
 
+import com.renlijia.bootapp.core.EmbeddedAppConfig;
+
 public class AdminServerConfig {
 
     private static final int DEFAULT_PORT = 8080;
@@ -14,6 +16,9 @@ public class AdminServerConfig {
     private String[] springConfigLocations;
     private Class springRegisterClass;
 
+    private RunMode runMode = RunMode.standalone;
+    private EmbeddedAppConfig embeddedAppConfig;
+
     private int minThreads = 100;
     private int maxThreads = 500;
 
@@ -23,6 +28,32 @@ public class AdminServerConfig {
     private int outputBufferSize =  32 * 1024;;
     private int requestHeaderSize = 8192;
     private int responseHeaderSize = 8192;
+
+    public AdminServerConfig(){
+
+    }
+
+    public AdminServerConfig(RunMode runMode,EmbeddedAppConfig embeddedAppConfig){
+        this.runMode = runMode;
+        this.embeddedAppConfig = embeddedAppConfig;
+        if(runMode == RunMode.embedded){
+            if(embeddedAppConfig == null || embeddedAppConfig.getLibAbsoluteDirs() == null){
+                throw new RuntimeException("embedded mode must set app lib absolute dir");
+            }
+        }
+    }
+
+    public RunMode getRunMode() {
+        return runMode;
+    }
+
+    public EmbeddedAppConfig getEmbeddedAppConfig() {
+        return embeddedAppConfig;
+    }
+
+    public void setEmbeddedAppConfig(EmbeddedAppConfig embeddedAppConfig) {
+        this.embeddedAppConfig = embeddedAppConfig;
+    }
 
     public int getMinThreads() {
         return minThreads;

@@ -1,13 +1,17 @@
 package com.renlijia.bootapp.core.test;
 
+import com.renlijia.bootapp.core.EmbeddedAppConfig;
 import com.renlijia.bootapp.core.jetty.JettyAdminServer;
 import com.renlijia.bootapp.core.server.AdminServerConfig;
+import com.renlijia.bootapp.core.server.RunMode;
 
 public class BootAppStarterTest {
 
     public static void main(String[] args)  {
 
-        AdminServerConfig adminServerConfig = new AdminServerConfig();
+        EmbeddedAppConfig embeddedAppConfig = new EmbeddedAppConfig();
+        embeddedAppConfig.setLibAbsoluteDirs(new String[]{"/Users/well/code-gitee/bootapp/bootapp-example/target"});
+        AdminServerConfig adminServerConfig = new AdminServerConfig(RunMode.embedded, embeddedAppConfig);
         adminServerConfig.setSpringConfigLocations(new String[]{"com.renlijia.bootapp.core.admin"});
         final JettyAdminServer server = new JettyAdminServer(adminServerConfig);
         try {

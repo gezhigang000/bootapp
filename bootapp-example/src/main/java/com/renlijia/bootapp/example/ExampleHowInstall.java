@@ -10,7 +10,7 @@ public class ExampleHowInstall implements HowInstall {
 
     @Override
     public String appWebContext() {
-        return null;
+        return "exam";
     }
 
     @Override
@@ -23,10 +23,6 @@ public class ExampleHowInstall implements HowInstall {
         return AppConfig.class;
     }
 
-    @Override
-    public String appJarAbsolutePath() {
-        return "/home/";
-    }
 
     @Override
     public String appJarIncludeByNameRegex() {

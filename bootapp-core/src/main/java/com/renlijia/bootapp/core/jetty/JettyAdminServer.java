@@ -1,7 +1,10 @@
 package com.renlijia.bootapp.core.jetty;
 
+import com.renlijia.bootapp.core.ApplicationContextBuilder;
+import com.renlijia.bootapp.core.admin.AppJarHolder;
 import com.renlijia.bootapp.core.server.AdminServer;
 import com.renlijia.bootapp.core.server.AdminServerConfig;
+import com.renlijia.bootapp.core.server.RunMode;
 import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
@@ -15,7 +18,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import java.net.InetSocketAddress;
+import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -43,14 +46,51 @@ public class JettyAdminServer implements AdminServer {
         QueuedThreadPool queuedThreadPool = new QueuedThreadPool();
         queuedThreadPool.setMaxThreads(adminServerConfig.getMaxThreads());
         queuedThreadPool.setMinThreads(adminServerConfig.getMinThreads());
-        server = new Server(new InetSocketAddress(adminServerConfig.getHost(), adminServerConfig.getPort()));
+        server = new Server(queuedThreadPool);
         ServerConnector serverConnector = getServerConnector();
         serverConnector.setHost(adminServerConfig.getHost());
         serverConnector.setPort(adminServerConfig.getPort());
-        server.setHandler(servletContextHandler(webApplicationContext()));
+        server.addConnector(serverConnector);
+        if (adminServerConfig.getRunMode() == RunMode.embedded) {
+            server.setHandler(servletContextHandler(buildRootContext()));
+            //安装app
+            installEmbeddedApp();
+        } else {
+            installStandaloneApp();
+        }
         server.start();
         server.join();
     }
+
+    private void installEmbeddedApp() throws MalformedURLException {
+        AppJarHolder.setEmbeddedAppConfig(adminServerConfig.getEmbeddedAppConfig());
+        AppJarHolder.reload();
+        WebApplicationContext webApplicationContext = ApplicationContextBuilder.buildAppContext(AppJarHolder.getHowInstall(), AppJarHolder.getAppClassloader());
+        String mapping = "/*";
+        if (AppJarHolder.getHowInstall().appWebContext() != null) {
+            mapping = "/" + AppJarHolder.getHowInstall().appWebContext() + "/*";
+        }
+        DispatcherServlet dispatcherServlet = new DispatcherServlet(webApplicationContext);
+        registerServlet(AppJarHolder.getHowInstall().appName(), mapping, dispatcherServlet);
+    }
+
+    public static void reInstall() throws MalformedURLException {
+        AppJarHolder.reload();
+        WebApplicationContext webApplicationContext = ApplicationContextBuilder.buildAppContext(AppJarHolder.getHowInstall(), AppJarHolder.getAppClassloader());
+        String mapping = "/*";
+        if (AppJarHolder.getHowInstall().appWebContext() != null) {
+            mapping = "/" + AppJarHolder.getHowInstall().appWebContext() + "/*";
+        }
+        DispatcherServlet dispatcherServlet = new DispatcherServlet(webApplicationContext);
+        registerServlet(AppJarHolder.getHowInstall().appName(), mapping, dispatcherServlet);
+    }
+
+    public void stop() throws Exception {
+        if (server != null) {
+            server.stop();
+        }
+    }
+
 
     private ServerConnector getServerConnector() {
         HttpConfiguration httpConfiguration = new HttpConfiguration();
@@ -59,13 +99,13 @@ public class JettyAdminServer implements AdminServer {
         httpConfiguration.setResponseHeaderSize(adminServerConfig.getResponseHeaderSize());
         HttpConnectionFactory httpConnectionFactory = new HttpConnectionFactory(httpConfiguration);
 
-        ServerConnector serverConnector = new ServerConnector(server,adminServerConfig.getAcceptors()
-        ,adminServerConfig.getSelectors(),httpConnectionFactory);
+        ServerConnector serverConnector = new ServerConnector(server, adminServerConfig.getAcceptors()
+                , adminServerConfig.getSelectors(), httpConnectionFactory);
         return serverConnector;
     }
 
 
-    public static void registerServlet(String appName, String mapping, DispatcherServlet dispatcherServlet) {
+    private static void registerServlet(String appName, String mapping, DispatcherServlet dispatcherServlet) {
         ServletHolder servletHolder = servletHolderMap.get(mapping);
         if (servletHolder != null) {
             try {
@@ -86,7 +126,6 @@ public class JettyAdminServer implements AdminServer {
         servletHolder = new ServletHolder(appName, dispatcherServlet);
         servletContextHandler.addServlet(servletHolder, mapping);
         servletHolderMap.put(mapping, servletHolder);
-        servletContextHandler.addEventListener(new ContextLoaderListener(dispatcherServlet.getWebApplicationContext()));
     }
 
 
@@ -98,7 +137,23 @@ public class JettyAdminServer implements AdminServer {
         return servletContextHandler;
     }
 
-    private WebApplicationContext webApplicationContext() {
+    private void installStandaloneApp() throws MalformedURLException {
+        servletContextHandler.setContextPath(adminServerConfig.getContextPath());
+
+        AppJarHolder.setEmbeddedAppConfig(adminServerConfig.getEmbeddedAppConfig());
+        AppJarHolder.reload();
+        WebApplicationContext webApplicationContext = ApplicationContextBuilder.buildAppContext(AppJarHolder.getHowInstall(), AppJarHolder.getAppClassloader());
+        String mapping = "/*";
+        if (AppJarHolder.getHowInstall().appWebContext() != null) {
+            mapping = "/" + AppJarHolder.getHowInstall().appWebContext() + "/*";
+        }
+        DispatcherServlet dispatcherServlet = new DispatcherServlet(webApplicationContext);
+        registerServlet(AppJarHolder.getHowInstall().appName(), mapping, dispatcherServlet);
+
+        servletContextHandler.addEventListener(new ContextLoaderListener(webApplicationContext));
+    }
+
+    private WebApplicationContext buildRootContext() {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
         if (adminServerConfig.getSpringConfigLocations() != null) {
             context.setConfigLocations(adminServerConfig.getSpringConfigLocations());
