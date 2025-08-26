@@ -15,6 +15,6 @@ public class AdminConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/adminstatic/**").addResourceLocations("classpath:/adminstatic/");
     }
 }

@@ -3,13 +3,13 @@ package com.renlijia.bootapp.core.admin;
 import com.renlijia.bootapp.core.AppClassloader;
 import com.renlijia.bootapp.core.EmbeddedAppConfig;
 import com.renlijia.bootapp.core.HowInstall;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class AppJarHolder {
 

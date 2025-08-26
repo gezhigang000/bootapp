@@ -13,7 +13,7 @@ public class ExampleController {
 
     @RequestMapping("/test")
     public String test(){
-        return "vvv 1122 this is exam test" + exampleService.some("do exec");
+        return "xxx test" + exampleService.some("do exec");
     }
 
     @RequestMapping("/")

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public class ExampleService {
 
     public String some(String p){
-        return p + " xxx example service xxx...";
+        return p + " vvvv...";
     }
 
 }

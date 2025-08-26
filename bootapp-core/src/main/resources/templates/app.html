@@ -1,10 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<header>
-
-</header>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Bulma!</title>
+    <link rel="stylesheet" href="/admin/adminstatic/bulma.min.css">
+</head>
 <body>
-<div th:each="list:${applist}">
-    <p th:text="${list.name}"></p>
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Jar名称</th>
+            <th>最近修改时间</th>
+            <th>完整路径</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="list:${applist}">
+            <td th:text="${list.name}"></td>
+            <td th:text="${#dates.format(list.lastUpdated, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${list.url}"></td>
+            <td>
+                <div class="file is-normal">
+                    <label class="file-label">
+                        <input class="file-input" type="file" name="jar"/>
+                        <span class="file-cta">
+
+                          <span class="file-label">上传jar…</span>
+                        </span>
+                    </label>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
+
 </body>
