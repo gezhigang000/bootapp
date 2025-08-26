@@ -10,7 +10,4 @@ public interface HowInstall {
 
     Class appClass();
 
-    String appJarIncludeByNameRegex();
-
-    String appJareExcludeByNameRegex();
 }

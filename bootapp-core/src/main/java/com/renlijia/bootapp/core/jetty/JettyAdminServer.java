@@ -12,6 +12,7 @@ import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.servlet.ServletMapping;
+import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
@@ -132,6 +133,7 @@ public class JettyAdminServer implements AdminServer {
 
     private ServletContextHandler buildRootServletContextHandler(WebApplicationContext context) {
         servletContextHandler.setContextPath(adminServerConfig.getContextPath());
+        servletContextHandler.setBaseResource(Resource.newResource(context.getClassLoader().getResource("template")));
         DispatcherServlet dispatcherServlet = new DispatcherServlet(context);
         servletContextHandler.addServlet(new ServletHolder(dispatcherServlet), adminServerConfig.getAdminMapping());
         servletContextHandler.addEventListener(new ContextLoaderListener(context));

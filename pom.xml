@@ -7,6 +7,7 @@
     <artifactId>bootapp-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>bootapp</name>
+
     <packaging>pom</packaging>
 
     <properties>
@@ -17,6 +18,7 @@
     <modules>
         <module>bootapp-core</module>
         <module>bootapp-example</module>
+        <module>bootapp-example-service</module>
         <module>bootapp-starter</module>
     </modules>
     <dependencyManagement>
@@ -29,6 +31,11 @@
             <dependency>
                 <groupId>com.renlijia.bootapp</groupId>
                 <artifactId>bootapp-example</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.renlijia.bootapp</groupId>
+                <artifactId>bootapp-example-service</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -47,6 +54,12 @@
                         <artifactId>spring-boot-starter-tomcat</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-thymeleaf</artifactId>
+                <version>3.5.4</version>
             </dependency>
 
             <dependency>
@@ -74,6 +87,15 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>

@@ -24,14 +24,5 @@ public class ExampleHowInstall implements HowInstall {
     }
 
 
-    @Override
-    public String appJarIncludeByNameRegex() {
-        return ".*example.*";
-    }
-
-    @Override
-    public String appJareExcludeByNameRegex() {
-        return "";
-    }
 
 }

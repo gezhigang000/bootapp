@@ -3,17 +3,17 @@ package com.renlijia.bootapp.core.admin;
 import com.renlijia.bootapp.core.AppClassloader;
 import com.renlijia.bootapp.core.EmbeddedAppConfig;
 import com.renlijia.bootapp.core.HowInstall;
-
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AppJarHolder {
 
-    private static Set<AppJar> appJarSet = new HashSet<>();
+    private static Set<AppJar> appJarSet = new TreeSet<>();
 
     private static HowInstall howInstall;
 
@@ -21,6 +21,10 @@ public class AppJarHolder {
 
     private static AppClassloader appClassloader;
 
+
+    public static List<AppJar> getAppJarList() {
+        return appJarSet.stream().sorted(Comparator.comparing(o -> o.name)).collect(Collectors.toList());
+    }
 
     public static void setEmbeddedAppConfig(EmbeddedAppConfig embeddedAppConfig) {
         AppJarHolder.embeddedAppConfig = embeddedAppConfig;

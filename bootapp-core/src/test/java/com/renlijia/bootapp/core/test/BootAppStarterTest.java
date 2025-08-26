@@ -10,7 +10,8 @@ public class BootAppStarterTest {
     public static void main(String[] args)  {
 
         EmbeddedAppConfig embeddedAppConfig = new EmbeddedAppConfig();
-        embeddedAppConfig.setLibAbsoluteDirs(new String[]{"/Users/well/code-gitee/bootapp/bootapp-example/target"});
+        embeddedAppConfig.setLibAbsoluteDirs(new String[]{"/Users/well/code-gitee/bootapp/bootapp-example/target",
+                "/Users/well/code-gitee/bootapp/bootapp-example-service/target"});
         AdminServerConfig adminServerConfig = new AdminServerConfig(AppRunMode.embedded, embeddedAppConfig);
         adminServerConfig.setSpringConfigLocations(new String[]{"com.renlijia.bootapp.core.admin"});
         final JettyAdminServer server = new JettyAdminServer(adminServerConfig);

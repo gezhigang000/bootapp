@@ -6,10 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AdminController {
 
-    @RequestMapping("/")
-    public String admin(){
-        return "this is admin console";
-    }
 
     @RequestMapping("/hi")
     public String hi(){

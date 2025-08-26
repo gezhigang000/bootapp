@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AppInstallController {
 
+
+
     @RequestMapping(value = "reInstall")
     public String reInstall() {
         try {

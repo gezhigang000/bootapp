@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header>
+
+</header>
+<body>
+<div th:each="list:${applist}">
+    <p th:text="${list.name}"></p>
+</div>
+</body>

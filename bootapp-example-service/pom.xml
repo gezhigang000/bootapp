@@ -8,9 +8,9 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	
-	<artifactId>bootapp-example</artifactId>
+	<artifactId>bootapp-example-service</artifactId>
 	<version>${revision}</version>
-	<name>bootapp-example</name>
+	<name>bootapp-example-service</name>
 
 
 	<dependencies>
@@ -26,17 +26,10 @@
 		</dependency>
 		<dependency>
 			<groupId>com.renlijia.bootapp</groupId>
-			<artifactId>bootapp-example-service</artifactId>
+			<artifactId>bootapp-core</artifactId>
 		</dependency>
 	</dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+
 
 </project>
