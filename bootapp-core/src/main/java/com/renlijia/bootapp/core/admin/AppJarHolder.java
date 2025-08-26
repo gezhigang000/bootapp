@@ -1,22 +1,30 @@
 package com.renlijia.bootapp.core.admin;
 
+import com.renlijia.bootapp.core.HowInstall;
+
 import java.net.URL;
 import java.util.*;
 
-public class JarFactory {
+public class AppJarHolder {
 
-    private static Set<AppJar> appJarSet = new HashSet<>();
+    private HowInstall howInstall;
 
+    private  Set<AppJar> appJarSet = new HashSet<>();
 
-    public void loadJar(String jarPath,String jarNameRegex){
-
+    public AppJarHolder(){
     }
 
-    public static boolean registerAppJar(AppJar appJar){
+    public void loadJar(HowInstall howInstall){
+        String appJarAbsolutePath = howInstall.appJarAbsolutePath();
+        String includeByNameRegex = howInstall.appJarIncludeByNameRegex();
+        String excludeByNameRegex = howInstall.appJareExcludeByNameRegex();
+    }
+
+    public  boolean registerAppJar(AppJar appJar){
        return appJarSet.add(appJar);
     }
 
-    public static boolean removeAppJar(AppJar appJar){
+    public  boolean removeAppJar(AppJar appJar){
         return appJarSet.remove(appJar);
     }
 

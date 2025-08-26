@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 public class JarPath {
 
-
     public String appJarPath;
 
     public String dependenceJarPath;
@@ -15,7 +14,6 @@ public class JarPath {
     public List<File> appJarFileList;
 
     public List<File> dependenceJarFileList;
-
 
     public JarPath(String appJarPath, String dependenceJarPath) {
         this.appJarPath = appJarPath;

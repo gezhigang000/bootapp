@@ -12,5 +12,7 @@ public interface HowInstall {
 
     String appJarAbsolutePath();
 
-    String appJarNameRegex();
+    String appJarIncludeByNameRegex();
+
+    String appJareExcludeByNameRegex();
 }
