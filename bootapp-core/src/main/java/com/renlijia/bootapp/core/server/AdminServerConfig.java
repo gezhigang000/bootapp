@@ -16,7 +16,7 @@ public class AdminServerConfig {
     private String[] springConfigLocations;
     private Class springRegisterClass;
 
-    private RunMode runMode = RunMode.standalone;
+    private AppRunMode appRunMode = AppRunMode.standalone;
     private EmbeddedAppConfig embeddedAppConfig;
 
     private int minThreads = 100;
@@ -25,26 +25,26 @@ public class AdminServerConfig {
     private int acceptors = -1;
     private int selectors = -1;
 
-    private int outputBufferSize =  32 * 1024;;
+    private int outputBufferSize = 32 * 1024;
+    ;
     private int requestHeaderSize = 8192;
     private int responseHeaderSize = 8192;
 
-    public AdminServerConfig(){
+    public AdminServerConfig() {
 
     }
 
-    public AdminServerConfig(RunMode runMode,EmbeddedAppConfig embeddedAppConfig){
-        this.runMode = runMode;
+    public AdminServerConfig(AppRunMode appRunMode, EmbeddedAppConfig embeddedAppConfig) {
+        this.appRunMode = appRunMode;
         this.embeddedAppConfig = embeddedAppConfig;
-        if(runMode == RunMode.embedded){
-            if(embeddedAppConfig == null || embeddedAppConfig.getLibAbsoluteDirs() == null){
-                throw new RuntimeException("embedded mode must set app lib absolute dir");
-            }
+        if (embeddedAppConfig == null || embeddedAppConfig.getLibAbsoluteDirs() == null) {
+            throw new RuntimeException("embedded mode must set app lib absolute dir");
         }
+
     }
 
-    public RunMode getRunMode() {
-        return runMode;
+    public AppRunMode getRunMode() {
+        return appRunMode;
     }
 
     public EmbeddedAppConfig getEmbeddedAppConfig() {

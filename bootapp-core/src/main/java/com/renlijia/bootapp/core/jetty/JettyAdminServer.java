@@ -4,7 +4,7 @@ import com.renlijia.bootapp.core.ApplicationContextBuilder;
 import com.renlijia.bootapp.core.admin.AppJarHolder;
 import com.renlijia.bootapp.core.server.AdminServer;
 import com.renlijia.bootapp.core.server.AdminServerConfig;
-import com.renlijia.bootapp.core.server.RunMode;
+import com.renlijia.bootapp.core.server.AppRunMode;
 import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
@@ -51,12 +51,13 @@ public class JettyAdminServer implements AdminServer {
         serverConnector.setHost(adminServerConfig.getHost());
         serverConnector.setPort(adminServerConfig.getPort());
         server.addConnector(serverConnector);
-        if (adminServerConfig.getRunMode() == RunMode.embedded) {
-            server.setHandler(servletContextHandler(buildRootContext()));
+        if (adminServerConfig.getRunMode() == AppRunMode.embedded) {
+            server.setHandler(buildRootServletContextHandler(buildRootContext()));
             //安装app
             installEmbeddedApp();
         } else {
             installStandaloneApp();
+            server.setHandler(servletContextHandler);
         }
         server.start();
         server.join();
@@ -129,7 +130,7 @@ public class JettyAdminServer implements AdminServer {
     }
 
 
-    private ServletContextHandler servletContextHandler(WebApplicationContext context) {
+    private ServletContextHandler buildRootServletContextHandler(WebApplicationContext context) {
         servletContextHandler.setContextPath(adminServerConfig.getContextPath());
         DispatcherServlet dispatcherServlet = new DispatcherServlet(context);
         servletContextHandler.addServlet(new ServletHolder(dispatcherServlet), adminServerConfig.getAdminMapping());
@@ -139,14 +140,10 @@ public class JettyAdminServer implements AdminServer {
 
     private void installStandaloneApp() throws MalformedURLException {
         servletContextHandler.setContextPath(adminServerConfig.getContextPath());
-
         AppJarHolder.setEmbeddedAppConfig(adminServerConfig.getEmbeddedAppConfig());
         AppJarHolder.reload();
         WebApplicationContext webApplicationContext = ApplicationContextBuilder.buildAppContext(AppJarHolder.getHowInstall(), AppJarHolder.getAppClassloader());
         String mapping = "/*";
-        if (AppJarHolder.getHowInstall().appWebContext() != null) {
-            mapping = "/" + AppJarHolder.getHowInstall().appWebContext() + "/*";
-        }
         DispatcherServlet dispatcherServlet = new DispatcherServlet(webApplicationContext);
         registerServlet(AppJarHolder.getHowInstall().appName(), mapping, dispatcherServlet);
 
