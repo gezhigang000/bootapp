@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: bootapp
+  profiles:
+    active: daily
+
+feign:
+  athena:
+    server: baidu.com
+

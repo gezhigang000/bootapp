@@ -5,14 +5,24 @@
 
     <groupId>com.renlijia.bootapp</groupId>
     <artifactId>bootapp-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${revision}</version>
     <name>bootapp</name>
 
     <packaging>pom</packaging>
 
     <properties>
         <java.version>17</java.version>
-        <revision>0.0.1-SNAPSHOT</revision>
+        <revision>1.1-SNAPSHOT</revision>
+        <feign.version>12.1</feign.version>
+        <jetty.version>11.0.11</jetty.version>
+        <spring.boot.version>3.0.5</spring.boot.version>
+        <feign.form.spring.version>3.8.0</feign.form.spring.version>
+        <spring.openfeign.version>4.0.2</spring.openfeign.version>
+        <logback.version>1.4.5</logback.version>
+        <fastjson.version>1.2.83</fastjson.version>
+        <key-service-config.version>4.3.jdk17</key-service-config.version>
+        <aliyun.sdk.oss.version>2.2.1</aliyun.sdk.oss.version>
+        <commons.io.version>2.2</commons.io.version>
     </properties>
 
     <modules>
@@ -20,9 +30,15 @@
         <module>bootapp-example</module>
         <module>bootapp-example-service</module>
         <module>bootapp-starter</module>
+        <module>bootapp-support</module>
     </modules>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.renlijia.bootapp</groupId>
                 <artifactId>bootapp-core</artifactId>
@@ -43,11 +59,17 @@
                 <artifactId>bootapp-starter</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <dependency>
+                <groupId>com.renlijia.bootapp</groupId>
+                <artifactId>bootapp-support</artifactId>
+                <version>${revision}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
-                <version>3.5.4</version>
+                <version>${spring.boot.version}</version>
+                <optional>true</optional>
                 <exclusions>
                     <exclusion>
                         <groupId>org.springframework.boot</groupId>
@@ -58,26 +80,117 @@
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-thymeleaf</artifactId>
-                <version>3.5.4</version>
+                <artifactId>spring-boot-starter-websocket</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-freemarker</artifactId>
+                <version>${spring.boot.version}</version>
+                <optional>true</optional>
             </dependency>
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-test</artifactId>
-                <version>3.5.4</version>
+                <version>${spring.boot.version}</version>
+                <optional>true</optional>
                 <scope>test</scope>
             </dependency>
+
+
+            <dependency>
+                <groupId>com.renlijia</groupId>
+                <artifactId>athena-api</artifactId>
+                <version>20250904.bootapp-SNAPSHOT</version>
+                <optional>true</optional>
+            </dependency>
+
+
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-core</artifactId>
+                <version>${feign.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-jackson</artifactId>
+                <version>${feign.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-slf4j</artifactId>
+                <version>${feign.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-okhttp</artifactId>
+                <version>${feign.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons.io.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.openfeign.form</groupId>
+                <artifactId>feign-form-spring</artifactId>
+                <version>${feign.form.spring.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>spring-web</artifactId>
+                        <groupId>org.springframework</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${aliyun.sdk.oss.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>net.sf.json-lib</groupId>
+                        <artifactId>json-lib</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+
 
             <dependency>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-server</artifactId>
-                <version>11.0.11</version>
+                <version>${jetty.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-servlet</artifactId>
-                <version>11.0.11</version>
+                <version>${jetty.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.eclipse.jetty.websocket</groupId>
+                <artifactId>websocket-jetty-api</artifactId>
+                <version>${jetty.version}</version>
+            </dependency>
+            <!-- To run websockets in embedded server -->
+            <dependency>
+                <groupId>org.eclipse.jetty.websocket</groupId>
+                <artifactId>websocket-jetty-server</artifactId>
+                <version>${jetty.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>com.renlijia</groupId>
+                <artifactId>key-service-config</artifactId>
+                <version>${key-service-config.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -96,6 +209,32 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.1.0</version>
+                <configuration>
+                    <!-- 是否更新pom文件，此处还有更高级的用法 -->
+                    <updatePomFile>true</updatePomFile>
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

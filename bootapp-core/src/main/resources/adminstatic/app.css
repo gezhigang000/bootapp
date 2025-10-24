@@ -1,0 +1,21 @@
+ .log-container {
+            font-family: monospace;
+            /* 使用等宽字体，类似于控制台 */
+            white-space: pre-wrap;
+            /* 保留空格和换行符 */
+            word-wrap: break-word;
+            /* 长单词或URL会自动换行 */
+            line-height: 1.5;
+            /* 行间距 */
+            background-color: #2d2d2d;
+            /* 深色背景 */
+            color: #ffffff;
+            /* 白色文字 */
+            overflow-y: auto;
+            /* 垂直滚动条 */
+            border-radius: 5px;
+            /* 圆角边框 */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            /* 添加阴影效果 */
+            height: calc(100vh - 350px);
+        }

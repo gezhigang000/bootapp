@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.renlijia.bootapp</groupId>
 		<artifactId>bootapp-parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>${revision}</version>
 	</parent>
 	
 	<artifactId>bootapp-example</artifactId>
@@ -24,10 +24,33 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>com.renlijia</groupId>
+			<artifactId>key-service-config</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-freemarker</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.renlijia.bootapp</groupId>
 			<artifactId>bootapp-example-service</artifactId>
 		</dependency>
+
+
+		<dependency>
+			<groupId>com.renlijia</groupId>
+			<artifactId>athena-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>

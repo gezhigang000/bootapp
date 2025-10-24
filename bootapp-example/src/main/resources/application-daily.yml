@@ -1,0 +1,14 @@
+
+
+spring:
+  application:
+    name: bootapp
+  profiles:
+    active: daily
+
+feign:
+  athena:
+    server: https://daily-athena.renlijia.com
+
+example:
+  p: 7545f9f9aac34969be77f08d0fe62a2b
