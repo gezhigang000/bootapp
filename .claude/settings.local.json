@@ -4,7 +4,14 @@
       "Bash(find:*)",
       "Bash(grep:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(git push)",
+      "Bash(git remote:*)",
+      "Bash(git push:*)",
+      "Bash(ssh:*)",
+      "Bash(ls:*)",
+      "Bash(git filter-branch:*)",
+      "Bash(git stash:*)"
     ]
   }
 }
