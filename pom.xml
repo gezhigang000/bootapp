@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.renlijia.bootapp</groupId>
+    <groupId>cc.starapp.bootapp</groupId>
     <artifactId>bootapp-parent</artifactId>
     <version>${revision}</version>
     <name>bootapp</name>
@@ -20,8 +20,6 @@
         <spring.openfeign.version>4.0.2</spring.openfeign.version>
         <logback.version>1.4.5</logback.version>
         <fastjson.version>1.2.83</fastjson.version>
-        <key-service-config.version>4.3.jdk17</key-service-config.version>
-        <aliyun.sdk.oss.version>2.2.1</aliyun.sdk.oss.version>
         <commons.io.version>2.2</commons.io.version>
     </properties>
 
@@ -40,27 +38,27 @@
                 <version>${fastjson.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.renlijia.bootapp</groupId>
+                <groupId>cc.starapp.bootapp</groupId>
                 <artifactId>bootapp-core</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.renlijia.bootapp</groupId>
+                <groupId>cc.starapp.bootapp</groupId>
                 <artifactId>bootapp-example</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.renlijia.bootapp</groupId>
+                <groupId>cc.starapp.bootapp</groupId>
                 <artifactId>bootapp-example-service</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.renlijia.bootapp</groupId>
+                <groupId>cc.starapp.bootapp</groupId>
                 <artifactId>bootapp-starter</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.renlijia.bootapp</groupId>
+                <groupId>cc.starapp.bootapp</groupId>
                 <artifactId>bootapp-support</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -99,15 +97,6 @@
                 <scope>test</scope>
             </dependency>
 
-
-            <dependency>
-                <groupId>com.renlijia</groupId>
-                <artifactId>athena-api</artifactId>
-                <version>20250904.bootapp-SNAPSHOT</version>
-                <optional>true</optional>
-            </dependency>
-
-
             <dependency>
                 <groupId>io.github.openfeign</groupId>
                 <artifactId>feign-core</artifactId>
@@ -144,19 +133,6 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            <dependency>
-                <groupId>com.aliyun.oss</groupId>
-                <artifactId>aliyun-sdk-oss</artifactId>
-                <version>${aliyun.sdk.oss.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>net.sf.json-lib</groupId>
-                        <artifactId>json-lib</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-
 
             <dependency>
                 <groupId>org.eclipse.jetty</groupId>
@@ -187,11 +163,6 @@
                 <version>${logback.version}</version>
                 <optional>true</optional>
             </dependency>
-            <dependency>
-                <groupId>com.renlijia</groupId>
-                <artifactId>key-service-config</artifactId>
-                <version>${key-service-config.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -215,7 +186,6 @@
                 <artifactId>flatten-maven-plugin</artifactId>
                 <version>1.1.0</version>
                 <configuration>
-                    <!-- 是否更新pom文件，此处还有更高级的用法 -->
                     <updatePomFile>true</updatePomFile>
                     <flattenMode>resolveCiFriendliesOnly</flattenMode>
                 </configuration>

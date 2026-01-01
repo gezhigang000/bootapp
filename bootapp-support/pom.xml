@@ -3,14 +3,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.renlijia.bootapp</groupId>
+		<groupId>cc.starapp.bootapp</groupId>
 		<artifactId>bootapp-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
-	
+
 	<artifactId>bootapp-support</artifactId>
 	<version>${revision}</version>
-	<name>bootapp-core</name>
+	<name>bootapp-support</name>
 
 
 	<dependencies>

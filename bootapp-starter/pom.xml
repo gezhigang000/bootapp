@@ -3,11 +3,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.renlijia.bootapp</groupId>
+		<groupId>cc.starapp.bootapp</groupId>
 		<artifactId>bootapp-parent</artifactId>
 		<version>${revision}</version>
 	</parent>
-	
+
 	<artifactId>bootapp-starter</artifactId>
 	<version>${revision}</version>
 	<name>bootapp-starter</name>
@@ -15,7 +15,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.renlijia.bootapp</groupId>
+			<groupId>cc.starapp.bootapp</groupId>
 			<artifactId>bootapp-core</artifactId>
 		</dependency>
 
@@ -35,24 +35,13 @@
 			<artifactId>spring-boot-starter-freemarker</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.renlijia.bootapp</groupId>
+			<groupId>cc.starapp.bootapp</groupId>
 			<artifactId>bootapp-example-service</artifactId>
-		</dependency>
-
-
-		<dependency>
-			<groupId>com.renlijia</groupId>
-			<artifactId>athena-api</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.renlijia</groupId>
-			<artifactId>key-service-config</artifactId>
 		</dependency>
 
 	</dependencies>

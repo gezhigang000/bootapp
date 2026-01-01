@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-   com.renlijia.bootapp.support.feign.autoconfigure.FeignAutoConfiguration
+   cc.starapp.bootapp.support.feign.autoconfigure.FeignAutoConfiguration

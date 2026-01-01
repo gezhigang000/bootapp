@@ -6,7 +6,7 @@
     　　　　　 </encoder>
     　　　</appender>
 
-    <appender name="webSocket" class="com.renlijia.bootapp.core.admin.socket.WebSocketAppender">
+    <appender name="webSocket" class="cc.starapp.bootapp.core.admin.socket.WebSocketAppender">
         <encoder>
             <pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
         </encoder>
